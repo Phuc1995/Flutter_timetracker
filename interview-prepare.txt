@@ -2,3 +2,4 @@
 -Stateless and stateful?
 -CrossAxisAlignment.stretch: full view
 -ctr + alt + m
+- @required
