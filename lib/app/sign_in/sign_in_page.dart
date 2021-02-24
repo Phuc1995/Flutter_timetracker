@@ -8,30 +8,30 @@ class SignInPage extends StatelessWidget {
         title: Text('Time Tracker'),
         elevation: 4,
       ),
-      body: buildContent(),
+      body: _buildContent(),
     );
   }
 
-  Widget buildContent() {
-    return Container(
-      color: Colors.yellow,
+  Widget _buildContent() {
+    return Padding(
+      padding: EdgeInsets.all(16.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            color: Colors.black26,
-            child: SizedBox(
-              width: 100,
-              height: 100,
-            ),
+          Text(
+            'Sign in',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w800),
           ),
-          Container(
-            color: Colors.red,
-            child: SizedBox(
-              width: 100,
-              height: 100,
-            ),
-          )
+          SizedBox(height: 8.0),
+          RaisedButton(
+              child: Text('Sign in with google',
+              style: TextStyle(
+                fontSize: 15.0,
+                color: Colors.black87
+              ),),
+              onPressed: () {}),
         ],
       ),
     );
