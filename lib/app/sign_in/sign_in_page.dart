@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracker/app/sign_in/sign_in_button.dart';
 import 'package:time_tracker/app/sign_in/social_sign_in_button.dart';
-import 'package:time_tracker/common_widgets/custom_raised_button.dart';
+import 'package:time_tracker/services/auth.dart';
 
 class SignInPage extends StatelessWidget {
+  SignInPage({@required this.auth});
+  final AuthBase auth;
+
+  Future<void> _signInAnonymously() async{
+    try{
+      await auth.signInAnonymously();
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
+  Future<void> _signInWithGoogle() async{
+    try{
+      await auth.signInWithGoogle();
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +53,7 @@ class SignInPage extends StatelessWidget {
             text: "Sign in with google",
             textColor: Colors.black87,
             color: Colors.white,
-            onPressed: (){},
+            onPressed: _signInWithGoogle,
           ),
           SizedBox(height: 8.0),
           SocialSignInButton(
@@ -62,7 +81,7 @@ class SignInPage extends StatelessWidget {
             text: "Go anonymous",
             textColor: Colors.black87,
             color: Colors.lime[300],
-            onPressed: (){},
+            onPressed: _signInAnonymously,
           ),
         ],
       ),

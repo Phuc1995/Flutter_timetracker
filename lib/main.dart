@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:time_tracker/app/landing_page.dart';
+import 'package:time_tracker/services/auth.dart';
 
 import 'app/sign_in/sign_in_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main(){
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  // Uncomment this to use the auth emulator for testing
+  // await FirebaseAuth.instance.useEmulator('http://localhost:9099');
   runApp(MyApp());
 }
 
@@ -14,7 +21,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.indigo,
       ),
-      home: SignInPage(),
+      home: LandingPage(
+        auth: Auth(),
+      ),
     );
   }
 }
