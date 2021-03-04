@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class User1 {
@@ -19,6 +20,8 @@ abstract class AuthBase {
   Future<void> signOut();
 
   Future<User1> signInWithGoogle();
+
+  Future<User1> signInWithFacebook();
 }
 
 class Auth implements AuthBase {
@@ -50,9 +53,28 @@ class Auth implements AuthBase {
 
   @override
   Future<void> signOut() async {
+    final facebookLogin = FacebookLogin();
+    await facebookLogin.logOut();
     final googleSignIn = GoogleSignIn();
     await googleSignIn.signOut();
     await _firebaseAuth.signOut();
+  }
+
+  @override
+  Future<User1> signInWithFacebook() async{
+    final facebookLogin = FacebookLogin();
+    final result = await facebookLogin.logIn(['email']);
+    if (result.accessToken != null) {
+      final authResult = await _firebaseAuth.signInWithCredential(
+        FacebookAuthProvider.credential(result.accessToken.token)
+      );
+      return _userFromFirebase(authResult.user);
+    } else {
+      throw PlatformException(
+        code: 'ERROR_MISSING_FACEBOOK_ID_TOKEN',
+        message: 'Missing Facebook ID Token',
+      );
+    }
   }
 
   @override

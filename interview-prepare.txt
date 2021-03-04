@@ -3,3 +3,4 @@
 -CrossAxisAlignment.stretch: full view
 -ctr + alt + m
 - @required
+- Column: mainAxisSize: MainAxisSize.min,
