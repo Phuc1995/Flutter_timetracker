@@ -4,3 +4,7 @@
 -ctr + alt + m
 - @required
 - Column: mainAxisSize: MainAxisSize.min,
+- Call native
+- Animation
+- Dio
+- keyboardType: TextInputType.emailAddress: set keyboard support for email format,
