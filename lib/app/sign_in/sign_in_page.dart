@@ -8,19 +8,23 @@ import 'package:time_tracker/app/sign_in/social_sign_in_button.dart';
 import 'package:time_tracker/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:time_tracker/services/auth.dart';
 
-class SignInPage extends StatefulWidget {
+class SignInPage extends StatelessWidget {
+  final SignInBloc bloc;
+  const SignInPage({Key key, this.bloc}) : super(key: key);
+
   static Widget create(BuildContext context) {
+    final auth = Provider.of<AuthBase>(context);
     return Provider<SignInBloc>(
-      builder: (_) => SignInBloc(),
-      child: SignInPage(),
+      dispose: (context, bloc) {
+        print("phuc test dispose");
+        bloc.dispose();
+      },
+      builder: (_) => SignInBloc(auth: auth),
+      child: Consumer<SignInBloc>(
+        builder: (context, bloc,_) => SignInPage(bloc: bloc,))
     );
   }
 
-  @override
-  _SignInPageState createState() => _SignInPageState();
-}
-
-class _SignInPageState extends State<SignInPage> {
   void _showSignInError(BuildContext context, PlatformException exception) {
     PlatformExceptionAlertDialog(
       title: "Sign In Failed",
@@ -29,41 +33,26 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Future<void> _signInAnonymously(BuildContext context) async {
-    final bloc = Provider.of<SignInBloc>(context);
     try {
-      bloc.setIsLoading(true);
-      final auth = Provider.of<AuthBase>(context);
-      await auth.signInAnonymously();
+      await bloc.signInAnonymously();
     } on PlatformException catch (exception) {
       _showSignInError(context, exception);
-    } finally {
-      bloc.setIsLoading(false);
     }
   }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
-    final bloc = Provider.of<SignInBloc>(context);
     try {
-      bloc.setIsLoading(true);
-      final auth = Provider.of<AuthBase>(context);
-      await auth.signInWithGoogle();
+      await bloc.signInWithGoogle();
     } on PlatformException catch (exception) {
       _showSignInError(context, exception);
-    } finally {
-      bloc.setIsLoading(false);
     }
   }
 
   Future<void> _signInWithFacebook(BuildContext context) async {
-    final bloc = Provider.of<SignInBloc>(context);
     try {
-      bloc.setIsLoading(true);
-      final auth = Provider.of<AuthBase>(context);
-      await auth.signInWithFacebook();
+      await bloc.signInWithFacebook();
     } on PlatformException catch (exception) {
       _showSignInError(context, exception);
-    } finally {
-      bloc.setIsLoading(false);
     }
   }
 
