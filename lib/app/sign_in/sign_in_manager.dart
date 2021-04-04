@@ -3,27 +3,17 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:time_tracker/services/auth.dart';
 
-class SignInBloc {
+class SignInManager {
+  SignInManager({@required this.auth, this.isLoading});
   final AuthBase auth;
-
-  SignInBloc({@required this.auth});
-
-  final StreamController<bool> _isLoadingController = StreamController<bool>();
-
-  Stream<bool> get isLoadingStream => _isLoadingController.stream;
-
-  void dispose() {
-    _isLoadingController.close();
-  }
-
-  void _setIsLoading(bool isLoading) => _isLoadingController.add(isLoading);
+  final ValueNotifier<bool> isLoading;
 
   Future<User1> _signIn(Future<User1> Function() signInMethod) async {
     try {
-      _setIsLoading(true);
+      isLoading.value = true;
       return await signInMethod();
     } catch (e) {
-      _setIsLoading(false);
+      isLoading.value = false;
       rethrow;
     }
   }

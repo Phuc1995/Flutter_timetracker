@@ -8,3 +8,9 @@
 - Animation
 - Dio
 - keyboardType: TextInputType.emailAddress: set keyboard support for email format,
+- request.auth.uid == uid
+- FirestoreService._(); create 1 instance and private contructor
+- Placeholder()
+-final id = widget.job?.id ?? documentIdFromCurrentDate();
+- typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item); no body
+- Widget Divider()
